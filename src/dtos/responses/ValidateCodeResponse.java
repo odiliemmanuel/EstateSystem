@@ -1,0 +1,13 @@
+package dtos.responses;
+
+import lombok.Data;
+
+@Data
+public class ValidateCodeResponse {
+
+    private String residentName;
+    private String visitorName;
+    private String codeType;
+    private String createdBy;
+    private boolean isValid;
+}
