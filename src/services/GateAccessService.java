@@ -77,6 +77,7 @@ public class GateAccessService {
 
     public GatePass mapTo(ValidateCodeRequest validateCodeRequest){
         GatePass gatePass = new GatePass();
+        gatePass
     }
 
 
