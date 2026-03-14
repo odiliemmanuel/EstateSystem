@@ -9,5 +9,6 @@ public class Visitor {
     private String phoneNumber;
     private String purposeOfVisit;
     private int id;
+    private String residentId;
 
 }

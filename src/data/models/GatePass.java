@@ -12,13 +12,11 @@ public class GatePass {
     private String code;
     private LocalDateTime endTime;
     private LocalDateTime startTime;
-    private static final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy h:mm a");
     private Visitor visitor;
     private int id;
     private Type passType;
     private boolean isValid = true;
-    private int residentId;
-
+    private String residentId;
 
 
 

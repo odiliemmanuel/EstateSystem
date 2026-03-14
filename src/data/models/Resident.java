@@ -1,6 +1,6 @@
 package data.models;
 import lombok.Data;
-import lombok.NonNull;
+
 
 import java.time.LocalDateTime;
 
@@ -14,6 +14,11 @@ public class Resident {
     private String houseAddress;
     private LocalDateTime dateRegistered = LocalDateTime.now();
 
-
+//    private String code;
+//    private String residentName;
+//    private String codeType;
+//    private String validTill;
+//    private String destination;
+//}
 
 }
