@@ -6,8 +6,10 @@ import dtos.requests.OnboardResidentRequest;
 import dtos.responses.OnboardResidentResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
+import utils.Mapper;
 import java.util.List;
+import java.util.Optional;
+
 
 @Service
 public class ResidentManagementService {
@@ -16,21 +18,35 @@ public class ResidentManagementService {
     private ResidentRepository residentRepository;
 
     public OnboardResidentResponse onboardResident(OnboardResidentRequest residentRequest){
-        return null;
+       Resident resident = Mapper.mapToResident(residentRequest);
+        residentRepository.save(resident);
+        return Mapper.mapResidentToResponse(resident);
     }
 
-    public String deleteResident(String id){
-        return null;
+
+    public void deleteResident(String id){
+       Optional<Resident> resident = residentRepository.findById(id);
+       if(resident.isPresent()){
+           residentRepository.delete(resident);
+       }
+
     }
 
-    public List<String> viewResidents(){
-        return null;
+    public List<Resident> viewResidents(){
+        return residentRepository.findAll();
     }
+
 
     public void validateCheckDuplicateFor(Resident resident){
-
+        if(residentRepository.findById(resident.getId()).isPresent()){
+            residentRepository.deleteById(resident.getId());
+            residentRepository.save(resident);
+        }
     }
 
     public void disableResident(String id){
+        Resident resident = residentRepository.findById(id).get();
+        resident.setEnabled(false);
+
     }
 }

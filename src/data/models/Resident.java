@@ -6,18 +6,13 @@ import java.time.LocalDateTime;
 
 @Data
 public class Resident {
-    @NonNull
     private String name;
-    @NonNull
     private String phoneNumber;
     private String id;
-    private boolean isEnabled;
-    @NonNull
+    private boolean isEnabled = true;
     private String email;
-    @NonNull
     private String houseAddress;
-    private LocalDateTime dateRegistered;
-
+    private LocalDateTime dateRegistered = LocalDateTime.now();
 
 
 
