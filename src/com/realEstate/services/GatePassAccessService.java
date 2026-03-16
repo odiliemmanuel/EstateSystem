@@ -1,6 +1,7 @@
 package com.realEstate.services;
 
 import com.realEstate.data.models.GatePass;
+import com.realEstate.data.models.Resident;
 import com.realEstate.data.models.Type;
 import com.realEstate.data.repositeries.GatePassRepository;
 import com.realEstate.data.repositeries.ResidentRepository;
@@ -34,27 +35,32 @@ public class GatePassAccessService {
 
 
     public String disableCode(String phoneNumber, String emailAddress) {
-
-        if(residentRepository.existResidentByEmailOrPhoneNumber(phoneNumber, emailAddress)){
-
-            residentRepository.findByEmail(emailAddress).setEnabled(false);
-            return "Gate pass has been disabled";
-        }
-        else{
+        Resident existingEmail = residentRepository.findByEmail(emailAddress);
+        Resident existingNumber = residentRepository.findByPhoneNumber(phoneNumber);
+        if (existingEmail != null && existingNumber != null) {
             throw new ResidentDoesNotExistException("Cannot find resident");
+        }
+
+        else{
+            residentRepository.findByPhoneNumber(phoneNumber).setEnabled(false);
+            return "Resident has been disabled";
         }
 
     }
 
 
     public String generateExitCode(String phoneNumber, String emailAddress){
-        if(residentRepository.existResidentByEmailOrPhoneNumber(phoneNumber, emailAddress)){
+        Resident existingEmail = residentRepository.findByEmail(emailAddress);
+        Resident existingNumber = residentRepository.findByPhoneNumber(phoneNumber);
+        if (existingEmail != null && existingNumber != null) {
+            throw new ResidentDoesNotExistException("Resident does not exist");
+        }
+
+        else{
             RandomCodeGenerator.generateCode();
             return "Pass Code successfully generated";
         }
-        else{
-            throw new ResidentDoesNotExistException("Resident does not exist");
-        }
+
 
     }
 

@@ -7,6 +7,5 @@ import org.springframework.stereotype.Repository;
 import java.util.Optional;
 @Repository
 public interface GatePassRepository extends MongoRepository<GatePass, String> {
-
     Optional<GatePass> findByCode(String code);
 }

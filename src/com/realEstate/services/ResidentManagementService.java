@@ -30,7 +30,7 @@ public class ResidentManagementService {
 
     public void deleteResident(String id){
        Optional<Resident> resident = residentRepository.findById(id);
-       if(resident.isPresent()) residentRepository.delete(resident);
+       if(resident.isPresent()) residentRepository.deleteById(id);
 
     }
 
