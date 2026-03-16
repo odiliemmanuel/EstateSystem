@@ -10,7 +10,6 @@ import java.util.Optional;
 public interface ResidentRepository extends MongoRepository<Resident, String> {
 
     Resident findByEmail(String email);
-    void delete(Resident resident);
-    boolean validateByEmailOrPhoneNumber(String phoneNumber, String emailAddress);
-    void delete(Optional<Resident> resident);
+    boolean existResidentByEmailOrPhoneNumber(String phoneNumber, String emailAddress);
+
 }

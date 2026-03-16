@@ -10,7 +10,6 @@ import lombok.Data;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.realEstate.utils.Mapper;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;

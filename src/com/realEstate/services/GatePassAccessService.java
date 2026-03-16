@@ -35,7 +35,7 @@ public class GatePassAccessService {
 
     public String disableCode(String phoneNumber, String emailAddress) {
 
-        if(residentRepository.validateByEmailOrPhoneNumber(phoneNumber, emailAddress)){
+        if(residentRepository.existResidentByEmailOrPhoneNumber(phoneNumber, emailAddress)){
 
             residentRepository.findByEmail(emailAddress).setEnabled(false);
             return "Gate pass has been disabled";
@@ -48,7 +48,7 @@ public class GatePassAccessService {
 
 
     public String generateExitCode(String phoneNumber, String emailAddress){
-        if(residentRepository.validateByEmailOrPhoneNumber(phoneNumber, emailAddress)){
+        if(residentRepository.existResidentByEmailOrPhoneNumber(phoneNumber, emailAddress)){
             RandomCodeGenerator.generateCode();
             return "Pass Code successfully generated";
         }
