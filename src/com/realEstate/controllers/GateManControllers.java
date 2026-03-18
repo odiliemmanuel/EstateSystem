@@ -9,8 +9,8 @@ import com.realEstate.services.GatePassAccessService;
 @Controller
 public class GateManControllers {
 
-//    @Autowired
-//    private GatePassAccessService services;
+    @Autowired
+    private GatePassAccessService services;
 
     public ResponseEntity<?> validateGatePass(ValidateCodeRequest validateCodeRequest){
         return null;
