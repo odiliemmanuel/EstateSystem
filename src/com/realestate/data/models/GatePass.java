@@ -1,4 +1,4 @@
-package com.realEstate.data.models;
+package com.realestate.data.models;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.data.mongodb.core.mapping.Document;
@@ -20,6 +20,7 @@ public class GatePass {
     private Type passType;
     private boolean isValid = true;
     private String residentId;
+
 
 
 

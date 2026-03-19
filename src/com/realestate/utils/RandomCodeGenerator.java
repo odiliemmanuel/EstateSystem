@@ -1,4 +1,4 @@
-package com.realEstate.utils;
+package com.realestate.utils;
 
 import java.security.SecureRandom;
 

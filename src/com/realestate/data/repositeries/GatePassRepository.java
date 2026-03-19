@@ -1,6 +1,6 @@
-package com.realEstate.data.repositeries;
+package com.realestate.data.repositeries;
 
-import com.realEstate.data.models.GatePass;
+import com.realestate.data.models.GatePass;
 import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.stereotype.Repository;
 

@@ -1,4 +1,4 @@
-package com.realEstate.exceptions;
+package com.realestate.exceptions;
 
 public class InvalidTimeException extends RuntimeException {
     public InvalidTimeException(String message) {

@@ -1,4 +1,4 @@
-package com.realEstate.dtos.responses;
+package com.realestate.dtos.responses;
 
 import lombok.Data;
 
@@ -6,7 +6,8 @@ import lombok.Data;
 public class OnboardResidentResponse {
 
     private String dateRegistered;
+    private String residentId;
     private String residentName;
-    private String residentEmail;
-    private boolean isEnabled;
+
+
 }

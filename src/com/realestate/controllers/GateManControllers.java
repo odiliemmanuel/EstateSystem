@@ -1,14 +1,14 @@
-package com.realEstate.controllers;
+package com.realestate.controllers;
 
-import com.realEstate.dtos.requests.ValidateCodeRequest;
-import com.realEstate.dtos.responses.ValidateCodeResponse;
-import com.realEstate.exceptions.GatePassDoesNotExistException;
-import org.apache.coyote.Response;
+import com.realestate.dtos.requests.ValidateCodeRequest;
+import com.realestate.dtos.responses.ValidateCodeResponse;
+import com.realestate.exceptions.GatePassDoesNotExistException;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import com.realEstate.services.GatePassAccessService;
+import com.realestate.services.GatePassAccessService;
 
 @Controller
 public class GateManControllers {

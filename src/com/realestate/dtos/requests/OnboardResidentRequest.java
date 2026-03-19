@@ -1,4 +1,4 @@
-package com.realEstate.dtos.requests;
+package com.realestate.dtos.requests;
 
 import lombok.Data;
 

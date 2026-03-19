@@ -1,24 +1,21 @@
-package com.realEstate.services;
+package com.realestate.services;
 
-import com.realEstate.data.models.GatePass;
-import com.realEstate.data.models.Resident;
-import com.realEstate.data.models.Type;
-import com.realEstate.data.repositeries.GatePassRepository;
-import com.realEstate.data.repositeries.ResidentRepository;
-import com.realEstate.dtos.requests.GenerateResidentEntryCodeRequest;
-import com.realEstate.dtos.requests.GenerateVisitorEntryCodeRequest;
-import com.realEstate.dtos.requests.ValidateCodeRequest;
-import com.realEstate.dtos.responses.GenerateResidentEntryCodeResponse;
-import com.realEstate.dtos.responses.GenerateVisitorEntryCodeResponse;
-import com.realEstate.dtos.responses.ValidateCodeResponse;
-import com.realEstate.exceptions.GatePassDoesNotExistException;
-import com.realEstate.exceptions.InvalidTimeException;
-import com.realEstate.exceptions.ResidentCodeDoesNotExitException;
-import com.realEstate.exceptions.ResidentDoesNotExistException;
+import com.realestate.data.models.GatePass;
+import com.realestate.data.models.Resident;
+import com.realestate.data.models.Type;
+import com.realestate.data.repositeries.GatePassRepository;
+import com.realestate.data.repositeries.ResidentRepository;
+import com.realestate.dtos.requests.GenerateResidentEntryCodeRequest;
+import com.realestate.dtos.requests.GenerateVisitorEntryCodeRequest;
+import com.realestate.dtos.requests.ValidateCodeRequest;
+import com.realestate.dtos.responses.GenerateResidentEntryCodeResponse;
+import com.realestate.dtos.responses.GenerateVisitorEntryCodeResponse;
+import com.realestate.dtos.responses.ValidateCodeResponse;
+import com.realestate.exceptions.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import com.realEstate.utils.Mapper;
-import com.realEstate.utils.RandomCodeGenerator;
+import com.realestate.utils.Mapper;
+import com.realestate.utils.RandomCodeGenerator;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
@@ -79,16 +76,16 @@ public class GatePassAccessService {
 
         GatePass gatePass = Mapper.mapEntryCodeToGatePass(generateResidentEntryCode);
         gatePassRepository.save(gatePass);
-        return Mapper.mapResidentEntryCodeToResponse(gatePass);
+        return Mapper.mapResidentEntryCodeToResponse(gatePass, residentRepository);
 
     }
 
 
 
-    public ValidateCodeResponse validateCodeResponse(ValidateCodeRequest validateCodeRequest){
-        GatePass gatePass = Mapper.mapValidateCodeToGatePass(validateCodeRequest);
+    public ValidateCodeResponse validateCode(ValidateCodeRequest validateCodeRequest){
+        GatePass gatePass = gatePassRepository.findByCode(validateCodeRequest.getCode()).orElseThrow(() -> new InvalidGatePassException("Code does not exist"));
         gatePassRepository.save(gatePass);
-        return Mapper.mapGatePassToResponse(gatePass);
+        return Mapper.mapGatePassToResponse(gatePass, residentRepository);
 
     }
 
