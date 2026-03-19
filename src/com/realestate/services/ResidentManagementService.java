@@ -1,20 +1,19 @@
-package com.realEstate.services;
+package com.realestate.services;
 
-import com.realEstate.data.models.Resident;
-import com.realEstate.data.repositeries.ResidentRepository;
-import com.realEstate.dtos.requests.OnboardResidentRequest;
-import com.realEstate.dtos.responses.OnboardResidentResponse;
-import com.realEstate.exceptions.ResidentAlreadyRegisteredException;
-import com.realEstate.exceptions.ResidentDoesNotExistException;
-import lombok.Data;
+import com.realestate.data.models.Resident;
+import com.realestate.data.repositeries.ResidentRepository;
+import com.realestate.dtos.requests.OnboardResidentRequest;
+import com.realestate.dtos.responses.OnboardResidentResponse;
+import com.realestate.exceptions.ResidentAlreadyRegisteredException;
+import com.realestate.exceptions.ResidentDoesNotExistException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import com.realEstate.utils.Mapper;
+import com.realestate.utils.Mapper;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
-@Data
+
+
 @Service
 public class ResidentManagementService {
 
@@ -28,9 +27,15 @@ public class ResidentManagementService {
     }
 
 
-    public void deleteResident(String id){
-       Optional<Resident> resident = residentRepository.findById(id);
-       if(resident.isPresent()) residentRepository.deleteById(id);
+    public void deleteResident(String emailAddress){
+       Resident resident = residentRepository.findByEmail(emailAddress);
+       if(resident.getEmail().equals(emailAddress)){
+           resident.setEnabled(false);
+           residentRepository.deleteByEmail(emailAddress);
+       }
+       else{
+           throw new ResidentDoesNotExistException("Resident does not exist");
+       }
 
     }
 
