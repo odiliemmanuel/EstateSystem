@@ -1,4 +1,4 @@
-package com.realEstate.exceptions;
+package com.realestate.exceptions;
 
 public class ResidentDoesNotExistException extends RuntimeException {
     public ResidentDoesNotExistException(String message) {

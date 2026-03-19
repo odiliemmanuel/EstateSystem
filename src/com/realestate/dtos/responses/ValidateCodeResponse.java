@@ -1,4 +1,4 @@
-package com.realEstate.dtos.responses;
+package com.realestate.dtos.responses;
 
 import lombok.Data;
 

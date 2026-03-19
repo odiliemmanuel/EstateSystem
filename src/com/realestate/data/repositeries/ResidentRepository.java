@@ -1,6 +1,6 @@
-package com.realEstate.data.repositeries;
+package com.realestate.data.repositeries;
 
-import com.realEstate.data.models.Resident;
+import com.realestate.data.models.Resident;
 import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.stereotype.Repository;
 
@@ -13,4 +13,5 @@ public interface ResidentRepository extends MongoRepository<Resident, String> {
     Resident findByPhoneNumber(String phoneNumber);
 
 
+    void deleteByEmail(String emailAddress);
 }

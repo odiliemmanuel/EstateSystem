@@ -1,4 +1,4 @@
-package com.realEstate.data.models;
+package com.realestate.data.models;
 
 import lombok.Data;
 import org.springframework.data.mongodb.core.mapping.Document;

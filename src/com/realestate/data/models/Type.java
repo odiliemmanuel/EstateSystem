@@ -1,4 +1,4 @@
-package com.realEstate.data.models;
+package com.realestate.data.models;
 
 public enum Type {
     ENTRY,
