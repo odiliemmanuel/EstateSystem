@@ -14,10 +14,6 @@ import com.realestate.dtos.responses.OnboardResidentResponse;
 import com.realestate.dtos.responses.ValidateCodeResponse;
 import org.springframework.stereotype.Component;
 
-import java.time.LocalDateTime;
-import java.time.LocalTime;
-
-
 @Component
 public class Mapper {
 
@@ -42,13 +38,17 @@ public class Mapper {
 
     public static GatePass mapEntryCodeToGatePass(GenerateResidentEntryCodeRequest generateResidentEntryCodeRequest){
         GatePass gatePass = new GatePass();
+
+        gatePass.setPassType(Type.ENTRY);
         gatePass.setResidentId(generateResidentEntryCodeRequest.getResidentId());
         gatePass.setEndTime(generateResidentEntryCodeRequest.getValidTill());
         return gatePass;
     }
 
+
     public static GenerateResidentEntryCodeResponse mapResidentEntryCodeToResponse(GatePass gatePass, ResidentRepository residentRepository) {
         GenerateResidentEntryCodeResponse generateResidentEntryCodeResponse = new GenerateResidentEntryCodeResponse();
+
         generateResidentEntryCodeResponse.setCode(gatePass.getCode());
         generateResidentEntryCodeResponse.setCodeType(String.valueOf(gatePass.getPassType()));
         generateResidentEntryCodeResponse.setResidentName(residentRepository.findById(gatePass.getResidentId()).get().getName());
@@ -60,6 +60,7 @@ public class Mapper {
 
     public static GatePass mapVisitor(GenerateVisitorEntryCodeRequest visitorEntryCode){
         GatePass gatepass = new GatePass();
+
         gatepass.setResidentId(visitorEntryCode.getResidentId());
         gatepass.getVisitor().setPhoneNumber(visitorEntryCode.getVisitorPhone());
         gatepass.getVisitor().setPurposeOfVisit(visitorEntryCode.getPurposeOfVisit());
@@ -67,8 +68,10 @@ public class Mapper {
         return gatepass;
     }
 
+
     public static GenerateVisitorEntryCodeResponse mapVisitorToResponse(GatePass gatePass){
         GenerateVisitorEntryCodeResponse generateVisitorEntryCodeResponse = new GenerateVisitorEntryCodeResponse();
+
         generateVisitorEntryCodeResponse.setCode(RandomCodeGenerator.generateCode());
         generateVisitorEntryCodeResponse.setVisitorName(gatePass.getVisitor().getName());
         generateVisitorEntryCodeResponse.setValidTill(String.valueOf(gatePass.getEndTime()));
@@ -80,18 +83,23 @@ public class Mapper {
 
     public static GatePass mapValidateCodeToGatePass(ValidateCodeRequest validateCodeRequest){
         GatePass gatePass = new GatePass();
+
         gatePass.setCode(validateCodeRequest.getCode());
-        gatePass.setPassType(Type.valueOf(validateCodeRequest.getCodeType().toUpperCase()));
+        gatePass.setPassType(Type.valueOf(validateCodeRequest.getCodeType()));
         return gatePass;
     }
 
 
     public static ValidateCodeResponse mapGatePassToResponse(GatePass gatePass, ResidentRepository residentRepository){
         ValidateCodeResponse validateCodeResponse = new ValidateCodeResponse();
+
+        validateCodeResponse.setVisitorName(residentRepository.findById(gatePass.getResidentId()).get().getName());
         validateCodeResponse.setResidentName(residentRepository.findById(gatePass.getResidentId()).get().getName());
-        validateCodeResponse.setVisitorName(gatePass.getVisitor().getName());
-        validateCodeResponse.setCodeType(gatePass.getPassType().toString());
+        validateCodeResponse.setCodeType(String.valueOf(gatePass.getPassType()).toUpperCase());
+        validateCodeResponse.setCode(gatePass.getCode());
+        validateCodeResponse.setCreatedBy(residentRepository.findById(gatePass.getResidentId()).get().getName());
         validateCodeResponse.setValid(true);
+        System.out.println("Generated code " +  gatePass.getPassType() );
         return validateCodeResponse;
     }
 
