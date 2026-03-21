@@ -75,6 +75,7 @@ public class GatePassAccessService {
     public GenerateResidentEntryCodeResponse generateResidentEntryCode(GenerateResidentEntryCodeRequest generateResidentEntryCode) {
 
         GatePass gatePass = Mapper.mapEntryCodeToGatePass(generateResidentEntryCode);
+        gatePass.setCode(RandomCodeGenerator.generateCode());
         gatePassRepository.save(gatePass);
         return Mapper.mapResidentEntryCodeToResponse(gatePass, residentRepository);
 
@@ -82,10 +83,14 @@ public class GatePassAccessService {
 
 
 
-    public ValidateCodeResponse validateCode(ValidateCodeRequest validateCodeRequest){
-        GatePass gatePass = gatePassRepository.findByCode(validateCodeRequest.getCode()).orElseThrow(() -> new InvalidGatePassException("Code does not exist"));
-        gatePassRepository.save(gatePass);
-        return Mapper.mapGatePassToResponse(gatePass, residentRepository);
+    public ValidateCodeResponse validateCode(ValidateCodeRequest request){
+
+            GatePass gatePass = gatePassRepository.findByCode(request.getCode())
+                    .orElseThrow(() -> new InvalidGatePassException("Invalid code"));
+
+
+            System.out.println(gatePass);
+            return Mapper.mapGatePassToResponse(gatePass, residentRepository);
 
     }
 
@@ -133,12 +138,7 @@ public class GatePassAccessService {
         return "Time extended successfully";
 
     }
+
+
 }
 
-
-//        OnboardResidentResponse onboardResidentResponse = new OnboardResidentResponse();
-//        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy h:mm a");
-//        LocalDateTime endDateTime = LocalDateTime.parse(endTime, formatter);
-//        onboardResidentResponse.setResidentId(residentId);
-//        onboardResidentResponse.setEndTime(endDateTime);
-//        return null;

@@ -1,8 +1,8 @@
 package com.realestate.data.models;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
-
 import java.time.Duration;
 import java.time.LocalDateTime;
 
@@ -12,11 +12,12 @@ import java.time.LocalDateTime;
 @Document
 public class GatePass {
 
+    @Id
+    private String gatePassId;
     private String code;
     private LocalDateTime endTime;
-    private LocalDateTime startTime;
+    private LocalDateTime startTime = LocalDateTime.now();
     private Visitor visitor;
-    private String gatePassId;
     private Type passType;
     private boolean isValid = true;
     private String residentId;
