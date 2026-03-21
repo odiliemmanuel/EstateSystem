@@ -86,4 +86,7 @@ public class ResidentManagementTest {
         assertEquals("Ejeh", residentManagementService.viewResidentUsingMail("odili09@gmail.com").getName());
 
     }
+
+    @Test
+
 }
