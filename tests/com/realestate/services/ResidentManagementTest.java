@@ -88,5 +88,22 @@ public class ResidentManagementTest {
     }
 
     @Test
+    public void testThatICanViewAllResidents() {
+        onboardResidentRequest.setName("Ejeh");
+        onboardResidentRequest.setPhoneNumber("07046731194");
+        onboardResidentRequest.setEmail("odili09@gmail.com");
+        onboardResidentRequest.setAddress("room 7");
+        residentManagementService.onboardResident(onboardResidentRequest);
+
+        onboardResidentRequest.setName("Resident");
+        onboardResidentRequest.setPhoneNumber("123456789");
+        onboardResidentRequest.setEmail("email");
+        onboardResidentRequest.setAddress("room 1");
+        residentManagementService.onboardResident(onboardResidentRequest);
+
+        assertEquals(3, residentRepository.count());
+
+//        assertEquals("Resident", residentManagementService.viewResidents().);
+    }
 
 }
