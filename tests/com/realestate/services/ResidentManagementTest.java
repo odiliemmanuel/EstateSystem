@@ -103,7 +103,6 @@ public class ResidentManagementTest {
 
         assertEquals(3, residentRepository.count());
 
-//        assertEquals("Resident", residentManagementService.viewResidents().);
     }
 
 }
