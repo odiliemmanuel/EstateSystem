@@ -6,7 +6,6 @@ import com.realestate.data.repositeries.ResidentRepository;
 import com.realestate.dtos.requests.OnboardResidentRequest;
 import com.realestate.dtos.responses.OnboardResidentResponse;
 import com.realestate.exceptions.ResidentAlreadyRegisteredException;
-import com.realestate.exceptions.ResidentDoesNotExistException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -122,6 +121,17 @@ public class ResidentManagementTest {
     }
 
 
+    @Test
+    public void testThatIfIDisableResident_ResidentIsNoLongerEnabled(){
+        onboardResidentRequest.setName("Ejeh");
+        onboardResidentRequest.setPhoneNumber("07046731194");
+        onboardResidentRequest.setEmail("email");
+        onboardResidentRequest.setAddress("room 1");
+        residentManagementService.onboardResident(onboardResidentRequest);
+
+        residentManagementService.disableResident(residentRepository.findByEmail("email@gmail.com").getEmail());
+        assertFalse(residentRepository.findByPhoneNumber("123456789").isEnabled());
+    }
 
 
 }

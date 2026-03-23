@@ -60,9 +60,7 @@ public class ResidentManagementService {
         }
     }
 
-    public void disableResident(String id){
-        Resident resident = residentRepository.findById(id).get();
-        resident.setEnabled(false);
-
+    public void disableResident(String email){
+        residentRepository.findByEmail(email).setEnabled(false);
     }
 }
