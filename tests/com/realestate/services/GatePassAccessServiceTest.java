@@ -77,4 +77,6 @@ public class GatePassAccessServiceTest {
         assertEquals("ENTRY", validateCodeResponse.getCodeType());
         assertEquals(onboardResidentRequest.getName(), validateCodeResponse.getResidentName());
     }
+
+
 }

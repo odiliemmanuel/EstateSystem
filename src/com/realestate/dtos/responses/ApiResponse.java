@@ -7,5 +7,7 @@ public class ApiResponse {
 
     private Object data;
     private boolean success;
+    private String status;
+    private Object message;
 
 }
