@@ -129,9 +129,11 @@ public class ResidentManagementTest {
         onboardResidentRequest.setAddress("room 1");
         residentManagementService.onboardResident(onboardResidentRequest);
 
-        residentManagementService.disableResident(residentRepository.findByEmail("email@gmail.com").getEmail());
-        assertFalse(residentRepository.findByPhoneNumber("123456789").isEnabled());
+        residentManagementService.disableResident(residentRepository.findByEmail("email").getEmail());
+        assertFalse(residentRepository.findByPhoneNumber("07046731194").isEnabled());
     }
+
+
 
 
 }

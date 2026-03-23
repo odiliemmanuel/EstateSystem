@@ -41,11 +41,6 @@ public class GatePassAccessServiceTest {
         onboardResidentRequest = new OnboardResidentRequest();
         onboardResidentResponse = new OnboardResidentResponse();
 
-        onboardResidentRequest.setName("Odili");
-        onboardResidentRequest.setPhoneNumber("123456789");
-        onboardResidentRequest.setEmail("email@gmail.com");
-        onboardResidentRequest.setAddress("room 5");
-        residentManagementService.onboardResident(onboardResidentRequest);
     }
 
 
@@ -53,7 +48,12 @@ public class GatePassAccessServiceTest {
     @Test
     public void testThatIGenerateCodeForResident_codeIsValidAtGateTest(){
 
-        OnboardResidentResponse onboardResidentResponse = residentManagementService.onboardResident(onboardResidentRequest);
+        onboardResidentRequest.setName("Odili");
+        onboardResidentRequest.setPhoneNumber("123456789");
+        onboardResidentRequest.setEmail("email@gmail.com");
+        onboardResidentRequest.setAddress("room 5");
+
+        residentManagementService.onboardResident(onboardResidentRequest);
 
         GenerateResidentEntryCodeRequest generateResidentEntryCodeRequest = new GenerateResidentEntryCodeRequest();
         generateResidentEntryCodeRequest.setResidentId(onboardResidentResponse.getResidentId());

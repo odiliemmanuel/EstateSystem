@@ -61,6 +61,8 @@ public class ResidentManagementService {
     }
 
     public void disableResident(String email){
-        residentRepository.findByEmail(email).setEnabled(false);
+       Resident resident =  residentRepository.findByEmail(email);
+               resident.setEnabled(false);
+        residentRepository.save(resident);
     }
 }
