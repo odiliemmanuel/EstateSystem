@@ -5,11 +5,13 @@ import com.realestate.data.repositeries.GatePassRepository;
 import com.realestate.data.repositeries.ResidentRepository;
 import com.realestate.dtos.requests.OnboardResidentRequest;
 import com.realestate.dtos.responses.OnboardResidentResponse;
+import com.realestate.exceptions.ResidentAlreadyRegisteredException;
+import com.realestate.exceptions.ResidentDoesNotExistException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.*;
 
 
 @SpringBootTest
@@ -56,7 +58,7 @@ public class ResidentManagementTest {
     @Test
     public void testThatIDeleteResident_NumberOfResidentsDecreases(){
         onboardResidentRequest.setName("Resident");
-        onboardResidentRequest.setPhoneNumber("123456789");
+        onboardResidentRequest.setPhoneNumber("12345265489");
         onboardResidentRequest.setEmail("email");
         onboardResidentRequest.setAddress("room 1");
         residentManagementService.onboardResident(onboardResidentRequest);
@@ -71,7 +73,7 @@ public class ResidentManagementTest {
     @Test
     public void testThatICanViewResident_UsingItsEmail(){
         onboardResidentRequest.setName("Resident");
-        onboardResidentRequest.setPhoneNumber("123456789");
+        onboardResidentRequest.setPhoneNumber("153456789");
         onboardResidentRequest.setEmail("email");
         onboardResidentRequest.setAddress("room 1");
         residentManagementService.onboardResident(onboardResidentRequest);
@@ -96,13 +98,30 @@ public class ResidentManagementTest {
         residentManagementService.onboardResident(onboardResidentRequest);
 
         onboardResidentRequest.setName("Resident");
-        onboardResidentRequest.setPhoneNumber("123456789");
+        onboardResidentRequest.setPhoneNumber("923456789");
         onboardResidentRequest.setEmail("email");
         onboardResidentRequest.setAddress("room 1");
         residentManagementService.onboardResident(onboardResidentRequest);
 
         assertEquals(3, residentRepository.count());
+        assertEquals(3, residentManagementService.viewResidents().size());
+        assertTrue(residentManagementService.viewResidents().contains(residentRepository.findByEmail("odili09@gmail.com")));
 
     }
+
+    @Test
+    public void testThatIfResidentToBeOnboardedExists_ErrorIsThrown(){
+        onboardResidentRequest.setName("Ejeh");
+        onboardResidentRequest.setPhoneNumber("07046731194");
+        onboardResidentRequest.setEmail("email@gmail.com");
+        onboardResidentRequest.setAddress("room 7");
+
+        assertThrows(ResidentAlreadyRegisteredException.class,
+                () -> residentManagementService.onboardResident(onboardResidentRequest));
+
+    }
+
+
+
 
 }

@@ -1,11 +1,9 @@
 package com.realestate.controllers;
 
-import com.realestate.data.models.Resident;
 import com.realestate.dtos.requests.OnboardResidentRequest;
-import com.realestate.dtos.responses.ApiResponse;
+import com.realestate.exceptions.ResidentAlreadyRegisteredException;
 import com.realestate.exceptions.ResidentDoesNotExistException;
 import com.realestate.services.ResidentManagementService;
-import org.apache.coyote.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.http.HttpStatus;
@@ -30,6 +28,8 @@ public class EstateManagerControllers {
         }
         catch (ResidentDoesNotExistException error) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(error.getMessage());
+        } catch (ResidentAlreadyRegisteredException e) {
+            throw new RuntimeException(e);
         }
     }
 

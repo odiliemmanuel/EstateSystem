@@ -9,7 +9,6 @@ import com.realestate.exceptions.ResidentDoesNotExistException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.realestate.utils.Mapper;
-import java.util.ArrayList;
 import java.util.List;
 
 
@@ -20,8 +19,9 @@ public class ResidentManagementService {
     @Autowired
     private ResidentRepository residentRepository;
 
-    public OnboardResidentResponse onboardResident(OnboardResidentRequest residentRequest){
+    public OnboardResidentResponse onboardResident(OnboardResidentRequest residentRequest) {
        Resident resident = Mapper.mapToResident(residentRequest);
+        validateCheckDuplicateFor(resident);
         residentRepository.save(resident);
         return Mapper.mapResidentToResponse(resident);
     }
@@ -40,13 +40,8 @@ public class ResidentManagementService {
     }
 
 
-    public List<String> viewResidents(){
-        List<Resident> residents = residentRepository.findAll();
-        List<String> listOfResidents = new ArrayList<>();
-        for(Resident resident : residents){
-            listOfResidents.add(resident.toString());
-        }
-        return listOfResidents;
+    public List<Resident> viewResidents(){
+        return residentRepository.findAll();
     }
 
 
@@ -56,9 +51,13 @@ public class ResidentManagementService {
     }
 
 
-    public void validateCheckDuplicateFor(Resident resident){
-        if(residentRepository.findByEmail(resident.getEmail()).equals(resident)) throw new ResidentAlreadyRegisteredException("Resident already exists");
-
+    public void validateCheckDuplicateFor(Resident resident) {
+        if(residentRepository.findByEmail(resident.getEmail()) != null){
+            throw new ResidentAlreadyRegisteredException("Resident is already registered");
+        }
+        if(residentRepository.findByPhoneNumber(resident.getPhoneNumber()) != null){
+            throw new ResidentAlreadyRegisteredException("Resident is already registered");
+        }
     }
 
     public void disableResident(String id){
