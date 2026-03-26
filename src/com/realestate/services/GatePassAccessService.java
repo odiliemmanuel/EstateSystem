@@ -7,9 +7,11 @@ import com.realestate.data.repositeries.GatePassRepository;
 import com.realestate.data.repositeries.ResidentRepository;
 import com.realestate.dtos.requests.GenerateResidentEntryCodeRequest;
 import com.realestate.dtos.requests.GenerateVisitorEntryCodeRequest;
+import com.realestate.dtos.requests.InviteVisitorRequest;
 import com.realestate.dtos.requests.ValidateCodeRequest;
 import com.realestate.dtos.responses.GenerateResidentEntryCodeResponse;
 import com.realestate.dtos.responses.GenerateVisitorEntryCodeResponse;
+import com.realestate.dtos.responses.InviteVisitorResponse;
 import com.realestate.dtos.responses.ValidateCodeResponse;
 import com.realestate.exceptions.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,7 +42,7 @@ public class GatePassAccessService {
 
         else{
             residentRepository.findByPhoneNumber(phoneNumber).setEnabled(false);
-            return "Resident has been disabled";
+            return "Code has been disabled";
         }
 
     }
@@ -49,7 +51,7 @@ public class GatePassAccessService {
     public String generateExitCode(String phoneNumber, String emailAddress){
         Resident existingEmail = residentRepository.findByEmail(emailAddress);
         Resident existingNumber = residentRepository.findByPhoneNumber(phoneNumber);
-        if (existingEmail != null && existingNumber != null) {
+        if (existingEmail == null && existingNumber == null) {
             throw new ResidentDoesNotExistException("Resident does not exist");
         }
 
@@ -66,10 +68,21 @@ public class GatePassAccessService {
     public GenerateVisitorEntryCodeResponse generateVisitorEntryCode(GenerateVisitorEntryCodeRequest visitorEntryCode){
 
         GatePass gatepass = Mapper.mapVisitor(visitorEntryCode);
+        gatepass.setCode(RandomCodeGenerator.generateCode());
         gatePassRepository.save(gatepass);
         return Mapper.mapVisitorToResponse(gatepass);
 
+
     }
+
+    public InviteVisitorResponse inviteVisitorResponse(InviteVisitorRequest inviteVisitorRequest){
+        GatePass gatePass = Mapper.mapVisitor(inviteVisitorRequest);
+        gatePassRepository.save(gatePass);
+        return Mapper.mapVisitorToInviteResponse(gatePass);
+    }
+
+
+
 
 
     public GenerateResidentEntryCodeResponse generateResidentEntryCode(GenerateResidentEntryCodeRequest generateResidentEntryCode) {
@@ -85,9 +98,11 @@ public class GatePassAccessService {
 
     public ValidateCodeResponse validateCode(ValidateCodeRequest request){
 
-            GatePass gatePass = gatePassRepository.findByCode(request.getCode())
-                    .orElseThrow(() -> new InvalidGatePassException("Invalid code"));
+//            if(!gatePassRepository.findByCode(request.getCode()).isPresent()){
+//                throw new InvalidGatePassException("Invalid code");
+//            }
 
+            GatePass gatePass = Mapper.mapValidateCodeToGatePass(request);
 
             System.out.println(gatePass);
             return Mapper.mapGatePassToResponse(gatePass, residentRepository);

@@ -1,7 +1,6 @@
 package com.realestate.controllers;
 
 import com.realestate.dtos.requests.OnboardResidentRequest;
-import com.realestate.exceptions.ResidentAlreadyRegisteredException;
 import com.realestate.exceptions.ResidentDoesNotExistException;
 import com.realestate.services.ResidentManagementService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,13 +27,13 @@ public class EstateManagerControllers {
         }
         catch (ResidentDoesNotExistException error) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(error.getMessage());
-        } catch (ResidentAlreadyRegisteredException e) {
-            throw new RuntimeException(e);
         }
+
     }
 
-    @GetMapping("/get-user/{email}")
-    public ResponseEntity<?> getUser(@PathVariable("email") String email) {
+
+    @GetMapping("/find-resident/{email}")
+    public ResponseEntity<?> findResident(@PathVariable("email") String email) {
         try{
             return ResponseEntity.status(HttpStatus.OK).body(residentManagementService.viewResidentUsingMail(email));
         }

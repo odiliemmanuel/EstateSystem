@@ -3,15 +3,10 @@ package com.realestate.utils;
 import com.realestate.data.models.GatePass;
 import com.realestate.data.models.Resident;
 import com.realestate.data.models.Type;
+import com.realestate.data.models.Visitor;
 import com.realestate.data.repositeries.ResidentRepository;
-import com.realestate.dtos.requests.GenerateResidentEntryCodeRequest;
-import com.realestate.dtos.requests.GenerateVisitorEntryCodeRequest;
-import com.realestate.dtos.requests.OnboardResidentRequest;
-import com.realestate.dtos.requests.ValidateCodeRequest;
-import com.realestate.dtos.responses.GenerateResidentEntryCodeResponse;
-import com.realestate.dtos.responses.GenerateVisitorEntryCodeResponse;
-import com.realestate.dtos.responses.OnboardResidentResponse;
-import com.realestate.dtos.responses.ValidateCodeResponse;
+import com.realestate.dtos.requests.*;
+import com.realestate.dtos.responses.*;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -59,13 +54,32 @@ public class Mapper {
     }
 
     public static GatePass mapVisitor(GenerateVisitorEntryCodeRequest visitorEntryCode){
+        Visitor visitor = new Visitor();
         GatePass gatepass = new GatePass();
+
+        gatepass.setVisitor(visitor);
 
         gatepass.setResidentId(visitorEntryCode.getResidentId());
         gatepass.getVisitor().setPhoneNumber(visitorEntryCode.getVisitorPhone());
         gatepass.getVisitor().setPurposeOfVisit(visitorEntryCode.getPurposeOfVisit());
         gatepass.getVisitor().setName(visitorEntryCode.getVisitorName());
         return gatepass;
+    }
+
+    public static GatePass mapVisitor(InviteVisitorRequest inviteVisitorRequest){
+        GatePass gatePass = new GatePass();
+        gatePass.getVisitor().setName(inviteVisitorRequest.getVisitorName());
+        gatePass.getVisitor().setPurposeOfVisit(inviteVisitorRequest.getPurposeOfVisit());
+        gatePass.getVisitor().setPhoneNumber(inviteVisitorRequest.getVisitorPhone());
+        return gatePass;
+    }
+
+    public static InviteVisitorResponse mapVisitorToInviteResponse(GatePass gatePass){
+        InviteVisitorResponse inviteVisitorResponse = new InviteVisitorResponse();
+
+        inviteVisitorResponse.setVisitorName(gatePass.getVisitor().getName());
+        inviteVisitorResponse.setPurposeOfVisit(gatePass.getVisitor().getPurposeOfVisit());
+        return inviteVisitorResponse;
     }
 
 

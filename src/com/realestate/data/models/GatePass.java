@@ -18,7 +18,7 @@ public class GatePass {
     private LocalDateTime endTime;
     private LocalDateTime startTime = LocalDateTime.now();
     private Visitor visitor;
-    private Type passType;
+    private Type passType = Type.ENTRY;
     private boolean isValid = true;
     private String residentId;
 
