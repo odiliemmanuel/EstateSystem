@@ -111,7 +111,7 @@ public class GatePassAccessService {
 
 
 
-    public String generateCode(){
+    public String generateCode() {
         return RandomCodeGenerator.generateCode();
     }
 
