@@ -41,4 +41,7 @@ public class EstateManagerControllers {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(error.getMessage());
         }
     }
+
+
+
 }

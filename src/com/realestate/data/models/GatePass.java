@@ -25,14 +25,14 @@ public class GatePass {
 
 
 
-    public String getDuration(LocalDateTime startTime, LocalDateTime endTime) {
-
-        Duration duration = Duration.between(startTime, endTime);
-        long hours = duration.toHours();
-        long minutes = duration.toMinutes() % 60;
-
-        return hours + ":" + minutes;
-    }
+//    public String getDuration(LocalDateTime startTime, LocalDateTime endTime) {
+//
+//        Duration duration = Duration.between(startTime, endTime);
+//        long hours = duration.toHours();
+//        long minutes = duration.toMinutes() % 60;
+//
+//        return hours + ":" + minutes;
+//    }
 
 
 }
