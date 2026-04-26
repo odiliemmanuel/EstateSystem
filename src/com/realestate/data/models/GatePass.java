@@ -7,7 +7,7 @@ import java.time.Duration;
 import java.time.LocalDateTime;
 
 
-@NoArgsConstructor
+
 @Data
 @Document
 public class GatePass {
